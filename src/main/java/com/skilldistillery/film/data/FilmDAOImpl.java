@@ -12,7 +12,6 @@ import java.util.List;
 import com.skilldistillery.film.entities.Film;
 
 public class FilmDAOImpl implements FilmDAO {
-<<<<<<< HEAD
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=MST";
 	private static final String user = "student";
 	private static final String password = "student";
@@ -32,11 +31,6 @@ public class FilmDAOImpl implements FilmDAO {
 //		return null;
 //	}
 //
-	@Override
-	public Film addFilm(Film film) {
-		// TODO Auto-generated method stub
-		return film;
-	}
 //
 //	@Override
 //	public void deleteFilm() {
@@ -49,13 +43,8 @@ public class FilmDAOImpl implements FilmDAO {
 //		// TODO Auto-generated method stub
 //		
 //	}
-=======
-	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=MST\";";
-	private static final String user = "student";
-	private static final String password = "student";
-
 	@Override
-	public void addFilm(Film film) throws SQLException {
+	public Film addFilm(Film film) throws SQLException {
 		// TODO Auto-generated method stub
 		String insertStatement = "INSERT INTO film (film.title, film.description, film.rating, film.release_year, film.language_id) +"
 				+ " VALUES(?, ?, ?, ?, ?)";
@@ -93,8 +82,8 @@ public class FilmDAOImpl implements FilmDAO {
 		}
 		pst.close();
 		conn.close();
+		return film;
 	}
->>>>>>> d9326c1afabd2ae819eecd8113d7cf3b01f94173
 
 	@Override
 	public Film findFilmbyID(int _filmid) throws SQLException {
@@ -106,14 +95,8 @@ public class FilmDAOImpl implements FilmDAO {
 		pst.setInt(1, _filmid);
 		ResultSet rs = pst.executeQuery();
 		while (rs.next()) {
-<<<<<<< HEAD
-			film = new Film(rs.getNString("film.title"), rs.getString("film.description"), rs.getString("film.rating"),
-					rs.getInt("film.release_year"), rs.getInt("film.language_id"));
-			//addActorToFilm(film, user, password, filmId);
-=======
 			film = new Film(rs.getString("film.title"), rs.getString("film.description"), rs.getString("film.rating"),
 					rs.getInt("film.release_year"), rs.getInt("film.language_id"));
->>>>>>> d9326c1afabd2ae819eecd8113d7cf3b01f94173
 		}
 
 		rs.close();
