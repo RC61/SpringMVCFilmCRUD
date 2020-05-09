@@ -1,5 +1,14 @@
 package com.skilldistillery.film.data;
 
-public interface FilmDAO {
+import java.sql.SQLException;
+import java.util.List;
 
+import com.skilldistillery.film.entities.Film;
+
+public interface FilmDAO {
+	public Film findFilmbyID(int id) throws SQLException;
+//	public List<Film> getFilmsBasedOnTitleOrDescription(String desc);
+//	public void addFilm(Film film);
+//	public void deleteFilm();
+//	public void editFilm();
 }
