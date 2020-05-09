@@ -9,18 +9,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>FilmInfo Page</h1>
 
-<<<<<<< HEAD
-${film.title }
-${film.description }
-<br>
-
-=======
-${film.title}
-${film.description}
->>>>>>> d9326c1afabd2ae819eecd8113d7cf3b01f94173
-
+	
+	<h1>Film Details</h1>
+	<c:choose>
+		<c:when test="${! empty film }">
+			<ul>
+				<li><strong>Film Title:</strong> ${film.title }</li>
+				<li><strong>Description:</strong>${film.description}</li>
+				<li><strong>Rating</strong>${film.rating}</li>
+				<li><strong>release year</strong> ${film.releaseYear}</li>
+			</ul>
+	</c:when>
+	</c:choose>
 
 </body>
 </html>

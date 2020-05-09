@@ -62,28 +62,36 @@ public class FilmController {
 		return mv;
 	}
 
-	@RequestMapping(path = "createFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(Film film, RedirectAttributes redir) throws SQLException {
-		Film ourFilm = filmDAO.addFilm(film);
-		System.out.println(film);
+//	@RequestMapping(path = "createFilm.do", method = RequestMethod.POST)
+//	public ModelAndView addFilm(@RequestParam("Home")String s, RedirectAttributes redir) throws SQLException {
+////		Film ourFilm = filmDAO.addFilm(film);
+////		System.out.println(film);
+//		ModelAndView mv = new ModelAndView();
+////		if(ourFilm == null) {
+////		redir.addFlashAttribute("failureToCreate", "Failed to add new film");
+////		}
+////		
+////		else {
+////		redir.addFlashAttribute("film", film);
+////		}
+////		
+//		mv.setViewName("redirect:filmCreated.do");
+//		return mv;
+//		
+//	}
+	
+	@RequestMapping(path="createFilm.do", method = RequestMethod.GET)
+	public ModelAndView seeStuff(@RequestParam("title") String s) {
 		ModelAndView mv = new ModelAndView();
-		if(ourFilm == null) {
-		redir.addFlashAttribute("failureToCreate", "Failed to add new film");
-		}
-		
-		else {
-		redir.addFlashAttribute("film", film);
-		}
-		
-		mv.setViewName("redirect:filmCreated.do");
+		mv.addObject(s);
+		mv.setViewName("seeStuff.jsp");
 		return mv;
-		
 	}
 	
 	@RequestMapping(path = "filmCreated.do", method = RequestMethod.GET)
 	  public ModelAndView created() {
 	    ModelAndView mv = new ModelAndView();
-	    mv.setViewName("WEB-INF/addFilm.jsp");
+	    mv.setViewName("index.html");
 	    return mv;
 	  }
 	
