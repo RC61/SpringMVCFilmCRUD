@@ -9,8 +9,7 @@ public class Film {
 	private int releaseYear;
 	private String language;
 	
-	public Film(int _id,String _title, String _description, String _rating, int _releaseYear, String _language) {
-		id = _id; 
+	public Film(String _title, String _description, String _rating, int _releaseYear, String _language) {
 		title = _title;
 		description = _description;
 		rating = _rating;

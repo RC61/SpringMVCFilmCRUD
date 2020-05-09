@@ -1,5 +1,7 @@
 package com.skilldistillery.film.controllers;
 
+import java.sql.SQLException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,16 +24,33 @@ public class FilmController {
     	
     }
     
-    
-    @RequestMapping(path="searchFilmById.do", method=RequestMethod.GET )
-    public ModelAndView findFilmbyID(@RequestParam(name = "filmId") String filmId ) {
+    @RequestMapping(path="home.do", method=RequestMethod.GET )
+    public ModelAndView goHome() {
     	ModelAndView mv = new ModelAndView();
     	//film class 
 //    	Film film = filmDAO.findFilmbyID(filmId);
 //    	
 //    	mv.addObject("filmById", film);
-    	mv.setViewName("WEB-INF/filmInfo.jsp");
+    	mv.setViewName("WEB-INF/views/home.jsp");
     	
+    	
+    	return mv;
+    }
+    @RequestMapping(path="searchFilmById.do", method=RequestMethod.GET )
+    public ModelAndView findFilmbyID(@RequestParam(name = "filmId") int filmId ) {
+    	ModelAndView mv = new ModelAndView();
+    	//film class 
+    	Film film;
+		try {
+			film = filmDAO.findFilmbyID(filmId);
+			
+			mv.addObject("film", film);
+			mv.setViewName("WEB-INF/filmInfo.jsp");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     	return mv;
     }
