@@ -11,10 +11,15 @@
 <body>
 	<h1>FilmInfo Page</h1>
 
+<<<<<<< HEAD
 ${film.title }
 ${film.description }
 <br>
 
+=======
+${film.title}
+${film.description}
+>>>>>>> d9326c1afabd2ae819eecd8113d7cf3b01f94173
 
 
 </body>

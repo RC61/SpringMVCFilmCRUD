@@ -57,6 +57,7 @@ public class Film {
 		return releaseYear;
 	}
 	
+<<<<<<< HEAD
 //	public void setLanguage(String _language) {
 //		_language = language;
 //	}
@@ -65,6 +66,20 @@ public class Film {
 //		return language;
 //	}
 //	
+=======
+	public void setLanguageID(int _language) {
+		_language = language;
+	}
+	
+	public int getLanguageID() {
+		return language;
+	}
+	
+	public String getLanguage() {
+		return null;
+	}
+	
+>>>>>>> d9326c1afabd2ae819eecd8113d7cf3b01f94173
 	public String toString() {
 		return "TITLE: " + title + "\nDESCRIPTION: " + description + "\nRATING " + rating + "\nRELEASE YEAR: " + releaseYear + "\nLANGUAGE: " + language;
 	}
