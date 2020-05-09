@@ -7,9 +7,9 @@ public class Film {
 	private String description;
 	private String rating;
 	private int releaseYear;
-	private String language;
+	private int language;
 	
-	public Film(String _title, String _description, String _rating, int _releaseYear, String _language) {
+	public Film(String _title, String _description, String _rating, int _releaseYear, int _language) {
 		title = _title;
 		description = _description;
 		rating = _rating;
@@ -57,14 +57,14 @@ public class Film {
 		return releaseYear;
 	}
 	
-	public void setLanguage(String _language) {
-		_language = language;
-	}
-	
-	public String getLanguage() {
-		return language;
-	}
-	
+//	public void setLanguage(String _language) {
+//		_language = language;
+//	}
+//	
+//	public String getLanguage() {
+//		return language;
+//	}
+//	
 	public String toString() {
 		return "TITLE: " + title + "\nDESCRIPTION: " + description + "\nRATING " + rating + "\nRELEASE YEAR: " + releaseYear + "\nLANGUAGE: " + language;
 	}
