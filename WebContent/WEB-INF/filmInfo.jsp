@@ -11,8 +11,8 @@
 <body>
 	<h1>FilmInfo Page</h1>
 
-${film.title }
-${film.description }
+${film.title}
+${film.description}
 
 
 </body>
