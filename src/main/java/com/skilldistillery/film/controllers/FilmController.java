@@ -63,7 +63,7 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "createFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(Film film, RedirectAttributes redir) {
+	public ModelAndView addFilm(Film film, RedirectAttributes redir) throws SQLException {
 		Film ourFilm = filmDAO.addFilm(film);
 		System.out.println(film);
 		ModelAndView mv = new ModelAndView();
