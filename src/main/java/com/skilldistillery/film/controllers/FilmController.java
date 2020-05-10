@@ -95,7 +95,15 @@ public class FilmController {
 
 		mv.setViewName("redirect:filmCreated.do");
 		return mv;
+	}
 
+
+	@RequestMapping(path="createFilm.do", method = RequestMethod.GET)
+	public ModelAndView seeStuff(@RequestParam("title") String s) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject(s);
+		mv.setViewName("seeStuff.jsp");
+		return mv;
 	}
 
 	@RequestMapping(path = "filmCreated.do", method = RequestMethod.GET)
@@ -104,5 +112,6 @@ public class FilmController {
 		mv.setViewName("WEB-INF/addFilm.jsp");
 		return mv;
 	}
+
 
 }

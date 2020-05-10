@@ -13,11 +13,18 @@
 	crossorigin="anonymous">
 </head>
 <body>
-
-
-
-	${film.title } ${film.description }
-	<br>
+	
+	<h1>Film Details</h1>
+	<c:choose>
+		<c:when test="${! empty film }">
+			<ul>
+				<li><strong>Film Title:</strong> ${film.title }</li>
+				<li><strong>Description:</strong>${film.description}</li>
+				<li><strong>Rating</strong>${film.rating}</li>
+				<li><strong>release year</strong> ${film.releaseYear}</li>
+			</ul>
+	</c:when>
+	</c:choose>s
 
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

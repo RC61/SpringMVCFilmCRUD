@@ -60,7 +60,7 @@ public class FilmDAOImpl implements FilmDAO {
 			pst.setString(1, film.getDescription());
 			pst.setString(1, film.getRating());
 			pst.setInt(1, film.getReleaseYear());
-			pst.setString(1, film.getLanguage());
+			//pst.setString(1, film.getLanguage());
 
 			ResultSet keys = pst.getGeneratedKeys();
 			while (keys.next()) {

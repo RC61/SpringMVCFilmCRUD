@@ -71,18 +71,6 @@ public class Film {
 		return releaseYear;
 	}
 
-	public void setLanguageID(int _language) {
-		_language = language;
-	}
-	
-	public int getLanguageID() {
-		return language;
-	}
-	
-	public String getLanguage() {
-		return null;
-	}
-	
 	public void setCast(List<Actor> _cast) {
 		cast = _cast;
 	}
