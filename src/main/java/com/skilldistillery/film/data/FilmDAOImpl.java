@@ -33,11 +33,33 @@ public class FilmDAOImpl implements FilmDAO {
 //	}
 //
 //
-//	@Override
-//	public void deleteFilm() {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Override
+	public boolean deleteFilm(int id) {
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, password);
+			conn.setAutoCommit(false);//START TRANSACTION IN MYSQL
+			String sql = "DELETE FROM film WHERE id = ?";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			int updateCount = stmt.executeUpdate();
+			conn.commit(); //SEALED TRANSACTION IN MYSQL
+			
+		} catch(SQLException e) {
+			System.out.println(e.getMessage()+ ": delete requires attention");
+			//if something goes wrong with commit to delete film
+			if(conn != null) {
+				try {
+					conn.rollback();//plead for forgiveness
+				}catch(SQLException e2) {
+					System.err.println(e2.getMessage()+ ": Required attention rollback on delete");
+				}
+			}
+			return false;
+		}
+		return true;
+	}
 //
 //	@Override
 //	public void editFilm() {

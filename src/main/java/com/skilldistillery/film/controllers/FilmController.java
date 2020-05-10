@@ -112,6 +112,18 @@ public class FilmController {
 		mv.setViewName("WEB-INF/addFilm.jsp");
 		return mv;
 	}
-
+	
+	@RequestMapping(path="deleteFilm.do",params="id", method=RequestMethod.POST)
+	public ModelAndView deleteFilm(int id) {
+		boolean delete = filmDAO.deleteFilm(id);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("delete", delete);
+		mv.addObject("filmId", id);
+		mv.setViewName("WEB-INF/filmDelete.jsp");
+		
+		return mv;
+		
+	}
 
 }
