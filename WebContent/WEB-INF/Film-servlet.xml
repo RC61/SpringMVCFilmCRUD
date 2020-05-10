@@ -13,7 +13,7 @@
  <context:component-scan base-package="com.skilldistillery.film.controllers, com.skilldistillery.film.data"/>
  
 
- <bean id="dao" class="com.skilldistillery.film.data.FilmDAOImpl"/>
+<!--  <bean id="dao" class="com.skilldistillery.film.data.FilmDAOImpl"/> -->
 
  
 </beans>
