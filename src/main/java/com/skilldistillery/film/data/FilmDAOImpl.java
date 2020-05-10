@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
 public class FilmDAOImpl implements FilmDAO {
@@ -88,7 +89,8 @@ public class FilmDAOImpl implements FilmDAO {
 	@Override
 	public Film findFilmbyID(int _filmid) throws SQLException {
 		Film film = null;
-		String selectStatement = "SELECT film.*, language.name FROM film JOIN language ON film.language_id = language.id WHERE film.id = ?";
+		String selectStatement = "SELECT film.*, category.name, language.name FROM film JOIN language ON film.language_id = language.id JOIN film_category ON film_category.film_id = film.id JOIN category ON category.id = film_category.category_id WHERE film.id = ?";
+		//String selectStatement = "SELECT film.*, category.name, language.name FROM film JOIN language ON film.language_id = language.id WHERE film.title LIKE ? OR film.description LIKE ?";
 
 		Connection conn = DriverManager.getConnection(URL, user, password);
 		PreparedStatement pst = conn.prepareStatement(selectStatement);
@@ -96,7 +98,7 @@ public class FilmDAOImpl implements FilmDAO {
 		ResultSet rs = pst.executeQuery();
 		while (rs.next()) {
 			film = new Film(rs.getString("film.title"), rs.getString("film.description"), rs.getString("film.rating"),
-					rs.getInt("film.release_year"), rs.getInt("film.language_id"));
+					rs.getInt("film.release_year"), rs.getInt("film.language_id"), rs.getString("category.name"));
 		}
 
 		rs.close();
@@ -107,32 +109,47 @@ public class FilmDAOImpl implements FilmDAO {
 	}
 
 	@Override
-	public List<Film> getFilmsBasedOnTitleOrDescription(String search) throws SQLException {
+	public List<Film> getFilmsBasedOnTitleOrDescription(String _desc) throws SQLException {
 		Film film = null;
 		List<Film> films = new ArrayList<>();
-		String selectStatement = "SELECT film.*, language.name FROM film JOIN language ON film.language_id = language.id WHERE film.title LIKE ? OR film.description LIKE ?";
+		//String selectStatement = "SELECT film.*, language.name FROM film JOIN language ON film.language_id = language.id WHERE film.title LIKE ? OR film.description LIKE ?";
+		String selectStatement = "SELECT film.*, category.name, language.name FROM film JOIN language ON film.language_id = language.id JOIN film_category ON film_category.film_id = film.id JOIN category ON category.id = film_category.category_id WHERE film.title LIKE ? OR film.description LIKE ?";
+		
 		Connection conn = DriverManager.getConnection(URL, user, password);
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-		try {
-			pst = conn.prepareStatement(selectStatement);
-			pst.setString(1, "%" + search + "%");
-			pst.setString(2, "%" + search + "%");
-			rs = pst.executeQuery();
-
-			while (rs.next()) {
-				if (film != null) {
-					film = new Film(rs.getString("film.title"), rs.getString("film.description"),
-							rs.getString("film.rating"), rs.getInt("film.release_year"), rs.getInt("film.language_id"));
-				}
+		PreparedStatement pst = conn.prepareStatement(selectStatement);
+		pst.setString(1, "%" + _desc + "%");
+		pst.setString(2, "%" + _desc + "%");
+		ResultSet rs = pst.executeQuery();
+		while(rs.next()) {
+			film = new Film(rs.getString("film.title"), rs.getString("film.description"), rs.getString("film.rating"),
+					rs.getInt("film.release_year"), rs.getInt("film.language_id"), rs.getString("category.name"));
+			if (film != null) {
+				addActorToFilm(film, user, password, rs.getInt("film.id"));
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+			films.add(film);
+		}
+		//rs.close();
+		//pst.close();
+		conn.close();
+		return films;
+	}
+	
+	private void addActorToFilm(Film _film, String _user, String _password, int _filmId) throws SQLException {
+		String selectStatement = "SELECT actor.first_name, actor.last_name, film.title FROM film_actor JOIN film ON film.id = film_actor.film_id JOIN actor ON film_actor.actor_id = actor.id WHERE film.id = ?";
+		Connection conn = DriverManager.getConnection(URL, _user, _password);
+		PreparedStatement pst = conn.prepareStatement(selectStatement);
+		pst.setInt(1, _filmId);
+
+		ResultSet rs = pst.executeQuery();
+		while (rs.next()) {
+			Actor actor = new Actor(rs.getString("actor.first_name"), rs.getString("actor.last_name"));
+			_film.addActorToCast(actor);
 		}
 		rs.close();
 		pst.close();
 		conn.close();
-		return films;
 	}
 
 }
+
+//

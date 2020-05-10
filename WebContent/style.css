@@ -1,0 +1,12 @@
+@charset "UTF-8";
+body { 
+	background-color: #152A55;
+}
+
+.centre {
+	text-align: center;
+}
+
+ul {
+	list-style-type: none;
+}

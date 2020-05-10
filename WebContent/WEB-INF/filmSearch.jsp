@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-Something, just so when we test this later....
+	<h1>SEARCH</h1>
+	<form action="listFilms.do" method="GET">
+		<input type="text" name="desc"/>TITLE
+		<button type="submit" >SUBMIT IT</button>
+	</form>
 </body>
 </html>

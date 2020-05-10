@@ -5,21 +5,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
+<link rel="stylesheet" text="text/css" href="style.css">
+<meta charset="UTF-8">
+<title>Film List</title>
 </head>
 <body>
+  
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="post-preview">
 
-
-
-	${film.title } ${film.description }
-	<br>
-
-
+					<ul>
+						<c:forEach var="s" items="${film}">
+							<li>
+								<div class="alert alert-light">
+									<h3 class="post-preview">${s.title}</h3>
+									<hr>
+									<p class="post-subtitle">
+										<strong>DESCRIPTION: </strong>${s.description}</p>
+									<p class="post-subtitle">
+										<strong>RATING: </strong>${s.rating}</p>
+									<p class="post-subtitle">
+										<strong>RATING: </strong>${s.category}</p>
+									<p class="post-subtitle">
+										<strong>RELEASE YEAR: </strong>${s.releaseYear}</p>
+									<p class="post-subtitle">
+										<strong>CAST: </strong>${s.cast}</p>
+								</div>
+							</li>
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
