@@ -17,7 +17,6 @@ public class FilmDAOImpl implements FilmDAO {
 	private static final String user = "student";
 	private static final String password = "student";
 
-	
 	static {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -60,7 +59,7 @@ public class FilmDAOImpl implements FilmDAO {
 			pst.setString(1, film.getDescription());
 			pst.setString(1, film.getRating());
 			pst.setInt(1, film.getReleaseYear());
-			//pst.setString(1, film.getLanguage());
+			// pst.setString(1, film.getLanguage());
 
 			ResultSet keys = pst.getGeneratedKeys();
 			while (keys.next()) {
@@ -90,7 +89,6 @@ public class FilmDAOImpl implements FilmDAO {
 	public Film findFilmbyID(int _filmid) throws SQLException {
 		Film film = null;
 		String selectStatement = "SELECT film.*, category.name, language.name FROM film JOIN language ON film.language_id = language.id JOIN film_category ON film_category.film_id = film.id JOIN category ON category.id = film_category.category_id WHERE film.id = ?";
-		//String selectStatement = "SELECT film.*, category.name, language.name FROM film JOIN language ON film.language_id = language.id WHERE film.title LIKE ? OR film.description LIKE ?";
 
 		Connection conn = DriverManager.getConnection(URL, user, password);
 		PreparedStatement pst = conn.prepareStatement(selectStatement);
@@ -112,15 +110,14 @@ public class FilmDAOImpl implements FilmDAO {
 	public List<Film> getFilmsBasedOnTitleOrDescription(String _desc) throws SQLException {
 		Film film = null;
 		List<Film> films = new ArrayList<>();
-		//String selectStatement = "SELECT film.*, language.name FROM film JOIN language ON film.language_id = language.id WHERE film.title LIKE ? OR film.description LIKE ?";
 		String selectStatement = "SELECT film.*, category.name, language.name FROM film JOIN language ON film.language_id = language.id JOIN film_category ON film_category.film_id = film.id JOIN category ON category.id = film_category.category_id WHERE film.title LIKE ? OR film.description LIKE ?";
-		
+
 		Connection conn = DriverManager.getConnection(URL, user, password);
 		PreparedStatement pst = conn.prepareStatement(selectStatement);
 		pst.setString(1, "%" + _desc + "%");
 		pst.setString(2, "%" + _desc + "%");
 		ResultSet rs = pst.executeQuery();
-		while(rs.next()) {
+		while (rs.next()) {
 			film = new Film(rs.getString("film.title"), rs.getString("film.description"), rs.getString("film.rating"),
 					rs.getInt("film.release_year"), rs.getInt("film.language_id"), rs.getString("category.name"));
 			if (film != null) {
@@ -128,12 +125,35 @@ public class FilmDAOImpl implements FilmDAO {
 			}
 			films.add(film);
 		}
-		//rs.close();
-		//pst.close();
+		// rs.close();
+		// pst.close();
 		conn.close();
 		return films;
 	}
-	
+
+	public Film editFilm(Film _film) throws SQLException {
+		Connection conn = DriverManager.getConnection(URL, user, password);
+		conn.setAutoCommit(false);
+		try {
+			String selectStatement = "UPDATE film SET title = ?, description = ?, rating = ?, language_id = ?, release_year = ?, category = ? WHERE film.id = ?";
+			PreparedStatement pst = conn.prepareStatement(selectStatement);
+			pst.setString(1, _film.getTitle());
+			pst.setString(2, _film.getDescription());
+			pst.setInt(3, _film.getLanguage());
+			pst.setInt(4, _film.getReleaseYear());
+			pst.setString(5, _film.getCategory());
+			pst.setInt(6, _film.getID());
+			int updateCount = pst.executeUpdate();
+			if(updateCount == 1) {
+				conn.commit();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			conn.rollback();
+		}
+		return _film;
+	}
+
 	private void addActorToFilm(Film _film, String _user, String _password, int _filmId) throws SQLException {
 		String selectStatement = "SELECT actor.first_name, actor.last_name, film.title FROM film_actor JOIN film ON film.id = film_actor.film_id JOIN actor ON film_actor.actor_id = actor.id WHERE film.id = ?";
 		Connection conn = DriverManager.getConnection(URL, _user, _password);

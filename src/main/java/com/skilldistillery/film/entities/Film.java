@@ -47,6 +47,14 @@ public class Film {
 		return title;
 	}
 	
+	public void setLanguage (int _language) {
+		language = _language;
+	}
+	
+	public int getLanguage() {
+		return language;
+	}
+	
 	public void setDescription(String _description) {
 		description = _description;
 	}

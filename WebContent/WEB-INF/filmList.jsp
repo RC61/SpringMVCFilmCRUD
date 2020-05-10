@@ -14,14 +14,13 @@
 <title>Film List</title>
 </head>
 <body>
-  
+
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-md-10 mx-auto">
 				<div class="post-preview">
-
 					<ul>
-						<c:forEach var="s" items="${film}">
+						<c:forEach var="s" items="${films}">
 							<li>
 								<div class="alert alert-light">
 									<h3 class="post-preview">${s.title}</h3>
@@ -36,6 +35,10 @@
 										<strong>RELEASE YEAR: </strong>${s.releaseYear}</p>
 									<p class="post-subtitle">
 										<strong>CAST: </strong>${s.cast}</p>
+									<form action="editFilm.do">
+										<button name="id" type="submit">DELETE</button>
+										<button name="id" type="submit">EDIT</button>
+									</form>
 								</div>
 							</li>
 						</c:forEach>

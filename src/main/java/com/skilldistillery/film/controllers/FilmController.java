@@ -67,7 +67,7 @@ public class FilmController {
 			films = filmDAO.getFilmsBasedOnTitleOrDescription(desc);
 			System.out.println(desc);
 			System.out.println(films);
-			mv.addObject("film", films);
+			mv.addObject("films", films);
 			if (films == null || films.size() == 0) {
 				mv.setViewName("WEB-INF/notFound.jsp");
 			} else {
@@ -96,7 +96,14 @@ public class FilmController {
 		mv.setViewName("redirect:filmCreated.do");
 		return mv;
 	}
-
+	
+	@RequestMapping(path = "editFilm.do", method = RequestMethod.POST)
+	public ModelAndView editFilm(Film film, RedirectAttributes redir) throws SQLException {		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject(film);
+		mv.setViewName("WEB-INF/editFilm.jsp");
+		return mv;
+	}
 
 	@RequestMapping(path="createFilm.do", method = RequestMethod.GET)
 	public ModelAndView seeStuff(@RequestParam("title") String s) {
