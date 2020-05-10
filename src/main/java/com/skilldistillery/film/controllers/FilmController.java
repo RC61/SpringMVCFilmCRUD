@@ -81,19 +81,14 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "createFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(Film film, RedirectAttributes redir) throws SQLException {
-		Film ourFilm = filmDAO.addFilm(film);
-		System.out.println(film);
+	public ModelAndView addFilm(Film film) throws SQLException {
+		Film newFilm = filmDAO.addFilm(film);
 		ModelAndView mv = new ModelAndView();
-		if (ourFilm == null) {
-			redir.addFlashAttribute("failureToCreate", "Failed to add new film");
-		}
+		
+		mv.addObject("film", newFilm);
+		mv.setViewName("WEB-INF/SeeStuff.jsp");
 
-		else {
-			redir.addFlashAttribute("film", film);
-		}
-
-		mv.setViewName("redirect:filmCreated.do");
+		System.out.println(newFilm);
 		return mv;
 	}
 	
@@ -106,9 +101,9 @@ public class FilmController {
 	}
 
 	@RequestMapping(path="createFilm.do", method = RequestMethod.GET)
-	public ModelAndView seeStuff(@RequestParam("title") String s) {
+	public ModelAndView seeStuff(Film film) {
 		ModelAndView mv = new ModelAndView();
-		mv.addObject(s);
+		mv.addObject(film);
 		mv.setViewName("seeStuff.jsp");
 		return mv;
 	}
@@ -119,6 +114,18 @@ public class FilmController {
 		mv.setViewName("WEB-INF/addFilm.jsp");
 		return mv;
 	}
-
+	
+	@RequestMapping(path="deleteFilm.do",params="id", method=RequestMethod.POST)
+	public ModelAndView deleteFilm(int id) {
+		boolean delete = filmDAO.deleteFilm(id);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("delete", delete);
+		mv.addObject("filmId", id);
+		mv.setViewName("WEB-INF/filmDelete.jsp");
+		
+		return mv;
+		
+	}
 
 }

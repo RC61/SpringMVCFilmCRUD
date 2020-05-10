@@ -9,9 +9,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
+@Repository
 public class FilmDAOImpl implements FilmDAO {
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=MST";
 	private static final String user = "student";
@@ -32,17 +35,61 @@ public class FilmDAOImpl implements FilmDAO {
 //	}
 //
 //
-//	@Override
-//	public void deleteFilm() {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Override
+	public boolean deleteFilm(int id) {
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, password);
+			conn.setAutoCommit(false);//START TRANSACTION IN MYSQL
+			String sql = "DELETE FROM film WHERE id = ?";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			int updateCount = stmt.executeUpdate();
+			conn.commit(); //SEALED TRANSACTION IN MYSQL
+			
+		} catch(SQLException e) {
+			System.out.println(e.getMessage()+ ": delete requires attention");
+			//if something goes wrong with commit to delete film
+			if(conn != null) {
+				try {
+					conn.rollback();//plead for forgiveness
+				}catch(SQLException e2) {
+					System.err.println(e2.getMessage()+ ": Required attention rollback on delete");
+				}
+			}
+			return false;
+		}
+		return true;
+	}
 //
 //	@Override
 //	public void editFilm() {
 //		// TODO Auto-generated method stub
 //		
 //	}
+	public String findLanguage(int filmId) {
+		String language = null;
+		Connection conn = null;
+		PreparedStatement pst = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, password);
+
+			String sql = "SELECT language.name FROM language JOIN film ON language.id = film.language_id WHERE film.id = ?";
+			pst = conn.prepareStatement(sql);
+			pst.setInt(1, filmId);
+
+			ResultSet langId = pst.executeQuery();
+			if (langId.next()) {
+				language = langId.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+//			System.out.println(e.getMessage() + ": language ID requires attention");
+		}
+		return language;
+	}
+
 	@Override
 	public Film addFilm(Film film) throws SQLException {
 		// TODO Auto-generated method stub
@@ -56,10 +103,10 @@ public class FilmDAOImpl implements FilmDAO {
 			conn.setAutoCommit(false);
 			pst = conn.prepareStatement(insertStatement, Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, film.getTitle());
-			pst.setString(1, film.getDescription());
-			pst.setString(1, film.getRating());
-			pst.setInt(1, film.getReleaseYear());
-			// pst.setString(1, film.getLanguage());
+			pst.setString(2, film.getDescription());
+			pst.setString(3, film.getRating());
+			pst.setInt(4, film.getReleaseYear());
+			pst.setInt(5, film.getLanguage());
 
 			ResultSet keys = pst.getGeneratedKeys();
 			while (keys.next()) {
@@ -130,6 +177,7 @@ public class FilmDAOImpl implements FilmDAO {
 		conn.close();
 		return films;
 	}
+
 
 	public Film editFilm(Film _film) throws SQLException {
 		Connection conn = DriverManager.getConnection(URL, user, password);

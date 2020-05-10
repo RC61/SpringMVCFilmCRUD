@@ -15,22 +15,38 @@
 		<button type="submit" value="Make Film">Submit</button>
 	</form>
 	
-	<!-- searchFilmById.do Form Section -->
-<!--  	<form action="searchFilmById.do" method="GET">
+	
+  	<form action="searchFilmById.do" method="GET">
 		Enter Film ID: <input type="text" name="filmId" /> <input
 			type="submit" value="Get Film Data" />
-<<<<<<< HEAD
-	</form>  -->
-=======
 	</form> 
 	
 	<h1> or</h1>
-	<!-- ADD Film -->
- 	<form action="createFilm.do" method="GET">
-		<label for="title">Title:</label> <input type="text" name="title" /> 
-		<input type="submit" value="Get Film Data" />
-		</form>
 	
->>>>>>> f576c552f01a370683480639b2b116a6ecbdb25c
+	
+	<!-- ADD Film ------------------------------------------------------->
+	
+<h2>Add a Film</h2>
+	<br>
+	<br> Enter a film and it's details:
+	<br>
+	<form action="createFilm.do" method="POST">
+		
+		Title:<input type="text" name="title" />
+		<br>
+		Description:<input type="text" name="description" size="4"/> 
+		<br>
+		Rating:<input type="text" name="rating" size="4"/> 
+		<br>
+		Release Year:<input type="text" name="releaseYear" size="4"/> 
+		<br>
+		<label>For the following, please type (1) for English, (2) for Italian, (3) for Japanese, (4) for Mandarin, (5) for French, or (6) for German</label>
+		Language ID:<input type="text" name="language" size="4"/>
+		<br>
+		<input type="submit" value="Submit" />
+	</form>
+	
+	<!-- ADD Film ------------------------------------------------------->
+	
 </body>
 </html>

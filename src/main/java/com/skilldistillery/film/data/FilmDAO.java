@@ -11,6 +11,6 @@ public interface FilmDAO {
 //	public List<Film> getFilmsBasedOnTitleOrDescription(String desc);
 	public List<Film> getFilmsBasedOnTitleOrDescription(String desc) throws SQLException;
 	public Film addFilm(Film film) throws SQLException;
-//	public void deleteFilm();
+	public boolean deleteFilm(int id);
 //	public void editFilm();
 }

@@ -3,6 +3,8 @@ package com.skilldistillery.film.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.skilldistillery.film.data.FilmDAOImpl;
+
 public class Film {
 	private int id;
 	//private List<Act>
@@ -13,7 +15,35 @@ public class Film {
 	private int language;
 	private List<Actor> cast;
 	private String category; 
+	private String lang;
 	
+	
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String _lang) {
+		this.lang = _lang;
+	}
+
+	public int getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(int _language) {
+		this.language = _language;
+	}
+
+	public Film() {
+	}
+	
+	public Film(String _title, String _description, String _rating, int _releaseYear, int _language) {
+		title = _title;
+		description = _description;
+		rating = _rating;
+		releaseYear = _releaseYear;
+		language = _language;
+	}
 	public Film(String _title, String _description, String _rating, int _releaseYear, int _language, String _category) {
 		title = _title;
 		description = _description;
@@ -45,14 +75,6 @@ public class Film {
 	
 	public String getTitle() {
 		return title;
-	}
-	
-	public void setLanguage (int _language) {
-		language = _language;
-	}
-	
-	public int getLanguage() {
-		return language;
 	}
 	
 	public void setDescription(String _description) {
