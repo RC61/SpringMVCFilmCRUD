@@ -80,13 +80,25 @@ public class FilmController {
 		return mv;
 	}
 
+	@RequestMapping(path="createFilm.do", method=RequestMethod.GET)
+	public ModelAndView addFilm(Film film) throws SQLException{
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("film", new Film());
+		
+		mv.setViewName("WEB-INF/film-diplay.jsp");
+		
+		return mv;
+	}
+	
+	
 	@RequestMapping(path = "createFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(Film film) throws SQLException {
+	public ModelAndView postFilm(Film film) throws SQLException {
 		Film newFilm = filmDAO.addFilm(film);
 		ModelAndView mv = new ModelAndView();
 		
 		mv.addObject("film", newFilm);
-		mv.setViewName("WEB-INF/SeeStuff.jsp");
+		mv.setViewName("WEB-INF/result.jsp");
 
 		System.out.println(newFilm);
 		return mv;
@@ -100,20 +112,7 @@ public class FilmController {
 		return mv;
 	}
 
-	@RequestMapping(path="createFilm.do", method = RequestMethod.GET)
-	public ModelAndView seeStuff(Film film) {
-		ModelAndView mv = new ModelAndView();
-		mv.addObject(film);
-		mv.setViewName("seeStuff.jsp");
-		return mv;
-	}
-
-	@RequestMapping(path = "filmCreated.do", method = RequestMethod.GET)
-	public ModelAndView created() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("WEB-INF/addFilm.jsp");
-		return mv;
-	}
+	
 	
 	@RequestMapping(path="deleteFilm.do",params="id", method=RequestMethod.POST)
 	public ModelAndView deleteFilm(int id) {

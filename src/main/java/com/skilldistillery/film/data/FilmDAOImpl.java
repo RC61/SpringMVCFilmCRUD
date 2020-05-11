@@ -40,28 +40,29 @@ public class FilmDAOImpl implements FilmDAO {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, user, password);
-			conn.setAutoCommit(false);//START TRANSACTION IN MYSQL
+			conn.setAutoCommit(false);// START TRANSACTION IN MYSQL
 			String sql = "DELETE FROM film WHERE id = ?";
-			
+
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			int updateCount = stmt.executeUpdate();
-			conn.commit(); //SEALED TRANSACTION IN MYSQL
-			
-		} catch(SQLException e) {
-			System.out.println(e.getMessage()+ ": delete requires attention");
-			//if something goes wrong with commit to delete film
-			if(conn != null) {
+			conn.commit(); // SEALED TRANSACTION IN MYSQL
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage() + ": delete requires attention");
+			// if something goes wrong with commit to delete film
+			if (conn != null) {
 				try {
-					conn.rollback();//plead for forgiveness
-				}catch(SQLException e2) {
-					System.err.println(e2.getMessage()+ ": Required attention rollback on delete");
+					conn.rollback();// plead for forgiveness
+				} catch (SQLException e2) {
+					System.err.println(e2.getMessage() + ": Required attention rollback on delete");
 				}
 			}
 			return false;
 		}
 		return true;
 	}
+
 //
 //	@Override
 //	public void editFilm() {
@@ -91,44 +92,57 @@ public class FilmDAOImpl implements FilmDAO {
 	}
 
 	@Override
-	public Film addFilm(Film film) throws SQLException {
-		// TODO Auto-generated method stub
-		String insertStatement = "INSERT INTO film (film.title, film.description, film.rating, film.release_year, film.language_id) +"
-				+ " VALUES(?, ?, ?, ?, ?)";
-
+	public Film addFilm(Film film) {
+		System.out.println("adding a film");
 		Connection conn = null;
-		PreparedStatement pst = null;
+		String insertStatement = "INSERT INTO film (film.title, film.description, film.rating, film.release_year, film.language_id) VALUES(?, ?, ?, ?, ?)";
 		try {
 			conn = DriverManager.getConnection(URL, user, password);
-			conn.setAutoCommit(false);
-			pst = conn.prepareStatement(insertStatement, Statement.RETURN_GENERATED_KEYS);
+
+			PreparedStatement pst = conn.prepareStatement(insertStatement, Statement.RETURN_GENERATED_KEYS);
+
 			pst.setString(1, film.getTitle());
 			pst.setString(2, film.getDescription());
 			pst.setString(3, film.getRating());
 			pst.setInt(4, film.getReleaseYear());
 			pst.setInt(5, film.getLanguage());
+			System.out.println(pst);
 
-			ResultSet keys = pst.getGeneratedKeys();
-			while (keys.next()) {
-				int uc = pst.executeUpdate();
-				if (uc == 1) {
-					conn.commit();
+			int uc = pst.executeUpdate();
+
+			conn.setAutoCommit(false);
+			if (uc == 1) {
+				ResultSet keys = pst.getGeneratedKeys();
+				while (keys.next()) {
+					// System.out.println("I'm the success"+ uc);
+					film.setID(keys.getInt(1));
 				}
+			} else {
+				film = null;
+
 			}
+			conn.commit();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			if (conn != null) {
-				try {
-					conn.rollback();
-				} catch (SQLException e1) {
-					System.err.println("Error rolling back.");
-					e1.printStackTrace();
-				}
+
+		if (conn != null) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
-		pst.close();
-		conn.close();
+//		pst.close();
+		try {
+			conn.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		}
 		return film;
 	}
 
@@ -178,7 +192,6 @@ public class FilmDAOImpl implements FilmDAO {
 		return films;
 	}
 
-
 	public Film editFilm(Film _film) throws SQLException {
 		Connection conn = DriverManager.getConnection(URL, user, password);
 		conn.setAutoCommit(false);
@@ -192,7 +205,7 @@ public class FilmDAOImpl implements FilmDAO {
 			pst.setString(5, _film.getCategory());
 			pst.setInt(6, _film.getID());
 			int updateCount = pst.executeUpdate();
-			if(updateCount == 1) {
+			if (updateCount == 1) {
 				conn.commit();
 			}
 		} catch (SQLException e) {
