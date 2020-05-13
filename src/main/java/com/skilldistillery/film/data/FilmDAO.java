@@ -8,9 +8,8 @@ import com.skilldistillery.film.entities.Film;
 public interface FilmDAO {
 	public Film findFilmbyID(int id) throws SQLException;
 
-//	public List<Film> getFilmsBasedOnTitleOrDescription(String desc);
 	public List<Film> getFilmsBasedOnTitleOrDescription(String desc) throws SQLException;
 	public Film addFilm(Film film) throws SQLException;
 	public boolean deleteFilm(int id);
-//	public void editFilm();
+	public Film updateFilm(Film film) throws SQLException;
 }

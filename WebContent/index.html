@@ -2,51 +2,42 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style.css">
 <title>Home</title>
 </head>
 <body>
 
+	<div class="container formbg">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="post-preview">
+					<h1 class="alert">Film Query Database</h1>
+					<form action="userAction" method="POST">
+						<button><a href="goToAddFilm.do">Add a Film</a></button>
+						<button><a href="searchByKeyword.do">Search By KeyWord</a></button>
+						<button><a href="searchById.do">Search film By ID</a></button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<h1>Film Query Database</h1>
-	
-	<h3>LOOK HERE!!!!!</h3>
-	<form action="listFilms.do", method="GET">
-		<input type="text" name="desc"/>
-		<button type="submit" value="Make Film">Submit</button>
-	</form>
-	
-	
-  	<form action="searchFilmById.do" method="GET">
-		Enter Film ID: <input type="text" name="filmId" /> <input
-			type="submit" value="Get Film Data" />
-	</form> 
-	
-	<h1> or</h1>
-	
-	
 	<!-- ADD Film ------------------------------------------------------->
-	
-<h2>Add a Film</h2>
-	<br>
-	<br> Enter a film and it's details:
-	<br>
-	<form action="createFilm.do" method="POST">
-		
-		Title:<input type="text" name="title" />
-		<br>
-		Description:<input type="text" name="description" size="4"/> 
-		<br>
-		Rating:<input type="text" name="rating" size="4"/> 
-		<br>
-		Release Year:<input type="text" name="releaseYear" size="4"/> 
-		<br>
-		<label>For the following, please type (1) for English, (2) for Italian, (3) for Japanese, (4) for Mandarin, (5) for French, or (6) for German</label>
-		Language ID:<input type="text" name="language" size="4"/>
-		<br>
-		<input type="submit" value="Submit" />
-	</form>
-	
-	<!-- ADD Film ------------------------------------------------------->
-	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+
 </body>
 </html>

@@ -11,20 +11,35 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="style.css">
+
 </head>
 <body>
-	
-	<h1>Film Details</h1>
-	<c:choose>
-		<c:when test="${! empty film }">
-			<ul>
-				<li><strong>Film Title:</strong> ${film.title }</li>
-				<li><strong>Description:</strong>${film.description}</li>
-				<li><strong>Rating</strong>${film.rating}</li>
-				<li><strong>release year</strong> ${film.releaseYear}</li>
-			</ul>
-	</c:when>
-	</c:choose>s
+
+	<div class="container formbg">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="post-preview">
+					<h1>${film.title }</h1>
+					<p>
+						<strong>Description: </strong>${film.description}</p>
+					<p>
+						<strong>Rating </strong>${film.rating}</p>
+					<p>
+						<strong>release year </strong> ${film.releaseYear}
+					</p>
+					<form action="editFilm.do">
+						<input type="hidden" name="id" value="${film.id }">
+						<button type="submit" class="btn">EDIT</a></button>
+					</form>
+					<form action="deleteFilm.do" method="POST">
+						<input type="hidden" name="id" value="${film.id }">
+						<button class="btn">DELETE</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

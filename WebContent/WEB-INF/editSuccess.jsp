@@ -1,37 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="style.css">
-
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-
-	<div class="container formbg">
-		<div class="row">
-			<div class="col-lg-8 col-md-10 mx-auto">
-				<div class="post-preview alert alert-success">
-					<h1>SUCCESS!</h1>
-					<p>${film.title} Was successfully Added</p>
-					<form action="home.do">
-						<input type="hidden" name="id" value="${film.id }">
-						<button class="btn">HOME</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
+	<h1 class=" alert alert-success">SUCCESS!</h1>
+	<p>${sessionScope.title } was successfully updated</p>
+	<a href="home.do">GO HOME!</a>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>

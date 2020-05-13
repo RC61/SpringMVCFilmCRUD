@@ -20,24 +20,31 @@
 			<div class="col-lg-8 col-md-10 mx-auto">
 				<div class="post-preview">
 					<ul>
-						<c:forEach var="s" items="${films}">
+						<c:forEach var="film" items="${films}">
 							<li>
 								<div class="alert alert-light">
-									<h3 class="post-preview">${s.title}</h3>
+									<h3 class="post-preview">${film.title}- ${film.id}</h3>
 									<hr>
 									<p class="post-subtitle">
-										<strong>DESCRIPTION: </strong>${s.description}</p>
+										<strong>DESCRIPTION: </strong>${film.description}</p>
 									<p class="post-subtitle">
-										<strong>RATING: </strong>${s.rating}</p>
+										<strong>RATING: </strong>${film.rating}</p>
 									<p class="post-subtitle">
-										<strong>RATING: </strong>${s.category}</p>
+										<strong>CATEGORY: </strong>${film.category}</p>
 									<p class="post-subtitle">
-										<strong>RELEASE YEAR: </strong>${s.releaseYear}</p>
+										<strong>RELEASE YEAR: </strong>${film.releaseYear}</p>
 									<p class="post-subtitle">
-										<strong>CAST: </strong>${s.cast}</p>
+										<strong>CAST: </strong>${film.cast}</p>
 									<form action="editFilm.do">
-										<button name="id" type="submit">DELETE</button>
-										<button name="id" type="submit">EDIT</button>
+										<input type="hidden" name="id" value="${film.id }">
+										<button type="submit" class="btn">
+											EDIT
+										</button>
+									</form>
+									<br/>
+									<form action="deleteFilm.do" method="POST">
+										<input type="hidden" name="id" value="${film.id }">
+										<button class="btn">DELETE</button>
 									</form>
 								</div>
 							</li>

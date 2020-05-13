@@ -1,22 +1,24 @@
-  
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Add a Film</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="style.css">
+
 </head>
 <body>
-	<h2>Add a Film</h2>
+
 	<br>
-	<br> Enter a film and it's details:
-	<br>
-	<form action="createFilm.do" method="POST">
-		
-		Title:<input type="text" name="title" value="${film.title }"/>
+	<!-- 	<form action="createFilm.do" method="POST">	
+		Title:<input type="text" name="title"/>
 		<br>
 		Description:<input type="text" name="description" size="4"/> 
 		<br>
@@ -28,6 +30,56 @@
 		Language ID:<input type="text" name="language" size="4"/>
 		<br>
 		<input type="submit" value="Submit" />
-	</form>
+	</form> -->
+
+	<div class="container formbg">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="post-preview alert alert-light">
+					<h2>Add a Film</h2>
+					<br> <br> Enter a film and it's details:
+					<form action="createFilm.do" method="POST">
+						<label for="description"><strong>TITLE </strong></label><input
+							name="title" /> <br /> <label for="description"><strong>DESCRIPTION</strong></label>
+						<input name="description" /> </br> <label for="rating"><strong>RATING</strong></label> <select
+							id="rating" name="rating">
+							<option value="G">G</option>
+							<option value="PG">PG</option>
+							<option value="PG13">PG13</option>
+							<option value="R">R</option>
+							<option value="NC17">NC-17</option>
+						</select></br> <label for="releaseYear"><strong>RELEASE YEAR</strong></label> <input
+							id="releaseYear" name="releaseYear">
+						</intput>
+
+						</br> <label for="language"><strong>LANGUAGE</strong></label> <select id="languages"
+							name="language">
+							<option value="1">English</option>
+							<option value="2">Italian</option>
+							<option value="3">Japanese</option>
+							<option value="4">Mandarin</option>
+							<option value="5">French</option>
+							<option value="6">German</option>
+						</select> <br />
+						<button type="submit" value="SUMBIT">SUBMIT</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	</select>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
 </body>
 </html>

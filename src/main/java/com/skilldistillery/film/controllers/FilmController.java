@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,7 @@ public class FilmController {
 	public void filmDAO(FilmDAO filmDAO) {
 
 	}
+
 // WHEN HOME .JSP IS CREATED CHANGE INDEX to HOME
 	@RequestMapping(path = "home.do", method = RequestMethod.GET)
 	public ModelAndView goHome() {
@@ -31,16 +34,30 @@ public class FilmController {
 		mv.setViewName("index.html");
 		return mv;
 	}
+	
+	@RequestMapping(path="searchByKeyword.do")
+	public ModelAndView keyWordSearch() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("WEB-INF/searchByKeyword.jsp");
+		return mv;
+	}
+	
+	@RequestMapping(path="searchById.do")
+	public ModelAndView idSearch() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("WEB-INF/searchByID.jsp");
+		return mv;
+	}
 
 	@RequestMapping(path = "searchFilmById.do", method = RequestMethod.GET)
-	public ModelAndView findFilmbyID(@RequestParam(name = "filmId") int filmId) {
+	public ModelAndView findFilmbyID(@RequestParam(name = "filmId") int filmId, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		// film class
 		Film film;
 		try {
 			film = filmDAO.findFilmbyID(filmId);
 			System.out.println(filmId);
-
+			session.setAttribute("film", film);
 			if (film == null) {
 				mv.setViewName("WEB-INF/notFound.jsp");
 
@@ -52,79 +69,106 @@ public class FilmController {
 			mv.setViewName("WEB-INF/filmInfo.jsp");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return mv;
 	}
 
 	@RequestMapping(path = "listFilms.do", method = RequestMethod.GET)
-	public ModelAndView getFilmsByTitleOrDescription(@RequestParam(name = "desc") String desc) {
+	public ModelAndView getFilmsByTitleOrDescription(String desc, HttpSession session, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> films = new ArrayList<>();
+		session.setAttribute("filmList",films);
 		try {
 			films = filmDAO.getFilmsBasedOnTitleOrDescription(desc);
-			System.out.println(desc);
-			System.out.println(films);
 			mv.addObject("films", films);
-			if (films == null || films.size() == 0) {
+			if(films == null || films.size() == 0) {
 				mv.setViewName("WEB-INF/notFound.jsp");
-			} else {
-				mv.setViewName("WEB-INF/filmList.jsp");
+			}else {
+				mv.setViewName("WEB-INF/filmList.jsp");					
 			}
+			System.out.println(desc);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			mv.setViewName("WEB-INF/error.jsp");					
 		}
 
 		return mv;
 	}
 
-	@RequestMapping(path="createFilm.do", method=RequestMethod.GET)
-	public ModelAndView addFilm(Film film) throws SQLException{
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("film", new Film());
-		
-		mv.setViewName("WEB-INF/film-diplay.jsp");
-		
-		return mv;
-	}
-	
-	
 	@RequestMapping(path = "createFilm.do", method = RequestMethod.POST)
-	public ModelAndView postFilm(Film film) throws SQLException {
-		Film newFilm = filmDAO.addFilm(film);
+	public ModelAndView getFilmDataFromForm(Film film, HttpSession session, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("film", newFilm);
-		mv.setViewName("WEB-INF/result.jsp");
+		try {
+			Film newFilm = filmDAO.addFilm(film);
+			session.setAttribute("newFilm", newFilm);
+			mv.setViewName("redirect:addSuccess.do");
 
-		System.out.println(newFilm);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			mv.setViewName("WEB-INF/notFound.jsp");
+		}
+
 		return mv;
+
 	}
 	
-	@RequestMapping(path = "editFilm.do", method = RequestMethod.POST)
-	public ModelAndView editFilm(Film film, RedirectAttributes redir) throws SQLException {		
+
+	@RequestMapping(path = "addSuccess.do")
+	public ModelAndView redirectToResult(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		mv.addObject(film);
+		Film film = (Film) session.getAttribute("newFilm");
+		mv.addObject("film", film);
+		mv.setViewName("WEB-INF/result.jsp");
+		session.removeAttribute("newFilm");
+		return mv;
+	}
+
+	@RequestMapping(path = "editFilm.do", method = RequestMethod.GET)
+	public ModelAndView editFilm(int id, HttpSession session) throws SQLException {
+		Film film = filmDAO.findFilmbyID(id);
+		session.setAttribute("editFilm", film);
+		System.out.println(id);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("film", film);
 		mv.setViewName("WEB-INF/editFilm.jsp");
 		return mv;
 	}
 
-	
-	
-	@RequestMapping(path="deleteFilm.do",params="id", method=RequestMethod.POST)
-	public ModelAndView deleteFilm(int id) {
-		boolean delete = filmDAO.deleteFilm(id);
-		
+	@RequestMapping(path = "deleteFilm.do", params = "id", method = RequestMethod.POST)
+	public ModelAndView deleteFilm(int id, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("delete", delete);
-		mv.addObject("filmId", id);
-		mv.setViewName("WEB-INF/filmDelete.jsp");
-		
+		boolean delete = filmDAO.deleteFilm(id);
+		if(delete == true) {
+			mv.setViewName("WEB-INF/deleteSuccess.jsp");
+		} else {
+			mv.setViewName("WEB-INF/error.jsp");
+		}
 		return mv;
-		
+	}
+	
+	@RequestMapping(path="goToAddFilm.do")
+	public ModelAndView addTheFilm() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("WEB-INF/addFilm.jsp");
+		return mv;
+	}
+
+	@RequestMapping(path = "insertEdit.do", method = RequestMethod.POST)
+	public ModelAndView submitEdit(Film film, RedirectAttributes redir, HttpSession session) throws SQLException {
+		ModelAndView mv = new ModelAndView();
+		Film updatedFilm = filmDAO.updateFilm(film);
+		session.setAttribute("title", updatedFilm.getTitle());
+		mv.setViewName("WEB-INF/editSuccess.jsp");
+		return mv;
+	}
+	
+	@RequestMapping(path="success.do")
+	public ModelAndView actionSuccess(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject(session.getAttribute("updatedFilm"));
+		mv.setViewName("WEB-INF/editSuccess.jsp");
+		return mv;
 	}
 
 }

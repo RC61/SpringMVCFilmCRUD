@@ -21,7 +21,7 @@
 			<div class="col-lg-8 col-md-10 mx-auto">
 				<div class="post-preview alert alert-success">
 					<h1>SUCCESS!</h1>
-					<p>${film.title} Was successfully Added</p>
+					<p>${film.title} Was successfully Deleted</p>
 					<form action="home.do">
 						<input type="hidden" name="id" value="${film.id }">
 						<button class="btn">HOME</button>

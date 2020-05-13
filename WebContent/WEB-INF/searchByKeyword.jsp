@@ -1,36 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="style.css">
-
+	<link rel="stylesheet" type="text/css" href="style.css">
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
 
 	<div class="container formbg">
 		<div class="row">
 			<div class="col-lg-8 col-md-10 mx-auto">
-				<div class="post-preview alert alert-success">
-					<h1>SUCCESS!</h1>
-					<p>${film.title} Was successfully Added</p>
-					<form action="home.do">
-						<input type="hidden" name="id" value="${film.id }">
-						<button class="btn">HOME</button>
+				<div class="post-preview alert alert-light">
+				<h1 class="blog-title">Search by Keyword</h1>
+					<form action="listFilms.do" method="GET">
+						<input type="text" name="desc" />
+						<button type="submit" value="Make Film">Submit</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

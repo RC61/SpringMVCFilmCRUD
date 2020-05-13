@@ -37,13 +37,6 @@ public class Film {
 	public Film() {
 	}
 	
-	public Film(String _title, String _description, String _rating, int _releaseYear, int _language) {
-		title = _title;
-		description = _description;
-		rating = _rating;
-		releaseYear = _releaseYear;
-		language = _language;
-	}
 	public Film(String _title, String _description, String _rating, int _releaseYear, int _language, String _category) {
 		title = _title;
 		description = _description;
@@ -53,11 +46,11 @@ public class Film {
 		category = _category;
 	}
 	
-	public void setID(int _id) {
+	public void setId(int _id) {
 		id = _id;
 	}
 	
-	public int getID() {
+	public int getId() {
 		return id;
 	}
 	
@@ -121,6 +114,6 @@ public class Film {
 	}
 	
 	public String toString() {
-		return "TITLE: " + title + "\nDESCRIPTION: " + description + "\nRATING " + rating + "\nRELEASE YEAR: " + releaseYear + "\nLANGUAGE: " + language;
+		return "ID: " + id + "\nTITLE: " + title + "\nDESCRIPTION: " + description + "\nRATING " + rating + "\nRELEASE YEAR: " + releaseYear + "\nLANGUAGE: " + language;
 	}
 }

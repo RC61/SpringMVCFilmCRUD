@@ -19,9 +19,9 @@
 	<div class="container formbg">
 		<div class="row">
 			<div class="col-lg-8 col-md-10 mx-auto">
-				<div class="post-preview alert alert-success">
-					<h1>SUCCESS!</h1>
-					<p>${film.title} Was successfully Added</p>
+				<div class="post-preview alert alert-danger">
+					<h1>ERROR!</h1>
+					<p>${film.title} encountered an error and was not deleted!</p>
 					<form action="home.do">
 						<input type="hidden" name="id" value="${film.id }">
 						<button class="btn">HOME</button>
